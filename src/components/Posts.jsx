@@ -4,7 +4,7 @@ import classes from './Posts.module.css';
 
 const Posts = ({blogPosts}) => {
   
-  // console.log(blogPosts);
+  
   return (
     <ul className={classes.posts}>      
       
