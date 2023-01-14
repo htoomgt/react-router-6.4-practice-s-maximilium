@@ -1,8 +1,58 @@
-import React from 'react'
+import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import NewPostForm from '../components/NewPostForm';
+import { savePost } from '../util/api';
+
+
+
+
 
 const NewPostPage = () => {
+  const [isSubmitting, setIsSubmitting] = useState();
+  const [error, setError] = useState();
+  const navigate = useNavigate();
+
+
+  async function submitHandler(event){
+    event.preventDefault();
+    setIsSubmitting(true);
+
+    try{
+      const formData =  new FormData(event.target);
+      const post = {
+        title :  formData.get('title'),
+        body : formData.get('post-text'),
+      };
+
+      await savePost(post);
+      navigate('/');
+
+    }catch(err){
+      setError(err);
+    }
+
+    setIsSubmitting(false);
+
+
+  }
+
+  function cancelHandler() {
+    navigate('/blog');
+  }
+
   return (
-    <div>NewPostPage</div>
+    <>
+      {error &&  <p>{error.message}</p>}
+      <NewPostForm 
+        onCancel={cancelHandler}
+        onSubmit={submitHandler}
+        submitting={isSubmitting}
+
+
+      />
+    </>
   )
 }
 

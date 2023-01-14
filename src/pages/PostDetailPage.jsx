@@ -25,7 +25,6 @@ const PostDetailPage = () => {
 
       try{
         const post = await getPost(id);
-        console.log(post);
 
         setPost(post);
       }catch(err){
